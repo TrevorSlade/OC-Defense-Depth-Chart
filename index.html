@@ -1,0 +1,1420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Eagles Defensive Depth Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#060c1a;--panel:#0c1528;--panel2:#121e38;--surface:#1a2848;
+  --text:#e8edf5;--muted:#8896b0;--line:#1e2d4a;--line2:#2a3f66;
+  --accent:#d4a017;--accent2:#e8b820;
+  --oc-blue:#1a3a8c;--oc-blue-dark:#0f2260;--oc-blue-light:#2a4faa;
+  --oc-gold:#d4a017;--oc-gold-light:#e8b820;
+  --green:#22c55e;--yellow:#fbbf24;--red:#ef4444;--blue:#58a6ff;
+  --card-bg:#ffffff;--card-ink:#0d1117;--card-muted:#57606a;
+  --radius:12px;--radius-sm:7px;
+
+  /* GROUP COLOR BLOCKS — OC Eagles: Royal Blue · Gold · Charcoal */
+  --db-head:#1a3a8c;     /* royal blue header — Secondary */
+  --db-col:#0d1e4a;      /* deep royal blue column */
+  --db-border:#1e40af;
+
+  --lb-head:#166534;     /* forest green header — Linebackers */
+  --lb-col:#052e16;      /* deep green column */
+  --lb-border:#15803d;
+
+  --dl-head:#1f2937;     /* charcoal header — D-Line */
+  --dl-col:#111827;      /* very dark slate column */
+  --dl-border:#374151;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;font-size:13px}
+
+header{
+  background:linear-gradient(135deg,var(--oc-blue-dark) 0%,var(--oc-blue) 60%,var(--oc-blue-light) 100%);
+  border-bottom:3px solid var(--oc-gold);
+  padding:0 16px;display:flex;align-items:center;justify-content:space-between;
+  height:58px;flex-shrink:0;z-index:10;
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-shield{
+  width:28px;height:32px;background:var(--accent);
+  clip-path:polygon(50% 0%,100% 15%,100% 60%,50% 100%,0% 60%,0% 15%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:900;color:#fff;font-family:'Barlow Condensed',sans-serif;
+}
+.logo-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:21px;letter-spacing:.06em;color:#fff}
+.logo-text span{color:var(--accent)}
+.header-actions{display:flex;gap:6px;align-items:center}
+.hbtn{
+  font-family:'Inter',sans-serif;font-weight:600;font-size:11px;letter-spacing:.02em;
+  padding:6px 11px;border-radius:var(--radius-sm);border:1px solid var(--line2);
+  background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap
+}
+.hbtn:hover{background:var(--surface);color:var(--text)}
+.hbtn.primary{background:var(--oc-blue);color:#fff;border-color:var(--oc-blue-dark)}
+.hbtn.primary:hover{background:var(--oc-blue-light)}
+.hbtn.danger{border-color:#7f1d1d;color:#f87171}
+.hbtn.danger:hover{background:#7f1d1d;color:#fff}
+
+.toolbar{
+  background:#0a1228;border-bottom:1px solid var(--line2);
+  padding:7px 16px;display:flex;gap:12px;align-items:center;flex-shrink:0;flex-wrap:wrap
+}
+.toolbar-field{display:flex;flex-direction:column;gap:3px}
+.tlabel{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.toolbar input,.toolbar select{
+  background:var(--panel2);border:1px solid var(--line2);border-radius:var(--radius-sm);
+  color:var(--text);font:inherit;font-size:12px;padding:5px 9px;outline:none;
+  transition:border-color .15s;height:30px
+}
+.toolbar input:focus,.toolbar select:focus{border-color:var(--accent)}
+.toolbar input{width:180px}
+
+.level-filter{display:flex;gap:4px;align-items:center}
+.lpill{
+  font-family:'Inter',sans-serif;font-weight:600;font-size:11px;
+  letter-spacing:.02em;padding:5px 13px;border-radius:20px;border:1px solid var(--line2);
+  background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;height:28px;
+  display:flex;align-items:center;
+}
+.lpill:hover{background:var(--surface);color:var(--text)}
+.lpill.active-all{background:#334155;color:#fff;border-color:#334155}
+.lpill.active-v{background:#1e3a8a;color:#93c5fd;border-color:#1e40af}
+.lpill.active-jv{background:#14532d;color:#86efac;border-color:#166534}
+.lpill.active-sw{background:#713f12;color:#fde68a;border-color:#92400e}
+.lpill.active-jvsw{background:#1e3a5a;color:#86d9fa;border-color:#1d4f7c}
+.lpill.active-layout{background:#334155;color:#fff;border-color:#475569}
+
+/* POSITION GROUPS layout */
+.alignment.groups-layout{
+  grid-template-columns:repeat(3,minmax(105px,1fr)) 14px repeat(3,minmax(105px,1fr)) 14px repeat(5,minmax(105px,1fr));
+  min-width:1280px;
+}
+.group-divider{width:14px}
+.group-lanes.groups-layout{
+  grid-template-columns:5fr 24px 3fr 24px 3fr;
+}
+
+.stats-bar{
+  background:#0a1228;border-bottom:1px solid var(--line2);
+  display:flex;flex-shrink:0;overflow-x:auto
+}
+.stat{
+  padding:6px 16px;border-right:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;min-width:76px
+}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text);line-height:1}
+.stat-label{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+.main{display:flex;flex:1;overflow:hidden;min-height:0}
+
+.roster-panel{
+  width:200px;flex-shrink:0;background:var(--panel);
+  border-right:1px solid var(--line2);display:flex;flex-direction:column;overflow:hidden
+}
+.panel-head{
+  padding:7px 8px;border-bottom:1px solid var(--line);
+  font-weight:700;font-size:10px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  display:flex;justify-content:space-between;align-items:center
+}
+.pool-pos-filter{
+  padding:5px 5px;border-bottom:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:3px;flex-shrink:0;
+}
+.pos-pill{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:10px;
+  letter-spacing:.03em;padding:2px 6px;border-radius:10px;
+  border:1px solid var(--line2);background:transparent;
+  color:var(--muted);cursor:pointer;transition:all .12s;
+}
+.pos-pill:hover{background:var(--surface);color:var(--text)}
+.pos-pill.active{background:var(--surface);color:var(--text);border-color:var(--muted)}
+.pos-pill.secondary.active{background:var(--db-col);color:#bfdbfe;border-color:var(--db-border)}
+.pos-pill.linebacker.active{background:var(--lb-col);color:#bbf7d0;border-color:var(--lb-border)}
+.pos-pill.def-line.active{background:var(--dl-col);color:#e5e7eb;border-color:var(--dl-border)}
+.pool{flex:1;overflow-y:auto;padding:5px;display:flex;flex-direction:column;gap:4px}
+.pool::-webkit-scrollbar{width:4px}
+.pool::-webkit-scrollbar-thumb{background:var(--line2);border-radius:4px}
+
+.chart-area{flex:1;overflow:auto;padding:14px 12px}
+.chart-area::-webkit-scrollbar{height:6px;width:6px}
+.chart-area::-webkit-scrollbar-thumb{background:var(--line2);border-radius:4px}
+
+/* GROUP LANE LABELS above the chart */
+.group-lanes{
+  display:grid;
+  grid-template-columns:3fr 3fr 3fr 2fr;
+  gap:5px;min-width:1200px;margin-bottom:4px;
+}
+.group-lane-label{
+  text-align:center;font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  padding:4px 0;border-radius:6px 6px 0 0;
+}
+.group-lane-label.secondary{background:var(--db-head);color:#fff}
+.group-lane-label.linebacker{background:var(--lb-head);color:#fff}
+.group-lane-label.def-line{background:var(--dl-head);color:#fff}
+
+.alignment{
+  display:grid;
+  grid-template-columns:repeat(11,minmax(105px,1fr));
+  gap:5px;min-width:1200px
+}
+
+/* POSITION COLUMNS */
+.pos-col{
+  border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;
+  transition:box-shadow .2s;border-width:2px;border-style:solid;
+}
+.pos-col.col-drag-over{box-shadow:0 0 0 3px var(--accent)!important;border-color:var(--accent)!important}
+
+.secondary{background:var(--db-col);border-color:var(--db-border)}
+.linebacker{background:var(--lb-col);border-color:var(--lb-border)}
+.def-line{background:var(--dl-col);border-color:var(--dl-border)}
+
+.pos-head{
+  padding:9px 5px 7px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:2px
+}
+.secondary .pos-head{background:var(--db-head)}
+.linebacker .pos-head{background:var(--lb-head)}
+.def-line .pos-head{background:var(--dl-head)}
+
+.pos-code{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:22px;letter-spacing:.04em;color:#fff;line-height:1
+}
+.pos-name{
+  font-size:9px;font-weight:700;letter-spacing:.06em;
+  color:rgba(255,255,255,.85);text-transform:uppercase
+}
+
+.slot-list{flex:1;padding:5px;display:flex;flex-direction:column;gap:4px;min-height:180px}
+.slot-list.list-drag-over{background:rgba(249,115,22,.1)}
+
+.zone-varsity{
+  background:rgba(26,58,140,.18);
+  border:1px solid rgba(26,58,140,.4);
+  border-radius:8px;padding:4px;
+  display:flex;flex-direction:column;gap:4px;
+  margin-bottom:2px;
+}
+.zone-jv{
+  background:rgba(20,83,45,.12);
+  border:1px solid rgba(20,83,45,.35);
+  border-radius:8px;padding:4px;
+  display:flex;flex-direction:column;gap:4px;
+}
+.zone-divider{
+  display:flex;align-items:center;gap:5px;
+  margin:3px 0;
+}
+.zone-divider-line{flex:1;height:1px;background:var(--line2)}
+.zone-divider-label{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;
+  padding:2px 6px;border-radius:10px;
+}
+.zone-divider-label.v-label{
+  background:rgba(26,58,140,.4);color:#93c5fd;border:1px solid rgba(26,58,140,.6);
+}
+.zone-divider-label.jv-label{
+  background:rgba(20,83,45,.4);color:#86efac;border:1px solid rgba(20,83,45,.6);
+}
+
+.slot-row{display:flex;align-items:flex-start;gap:4px;position:relative}
+.slot-row.slot-drag-over-top::before{
+  content:'';position:absolute;top:-2px;left:0;right:0;height:2px;
+  background:var(--accent);border-radius:1px;
+}
+.slot-row.slot-drag-over-bottom::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;
+  background:var(--accent);border-radius:1px;
+}
+.slot-label-col{
+  font-size:10px;font-weight:700;
+  color:var(--muted);padding-top:8px;min-width:16px;text-align:center;flex-shrink:0
+}
+.slot-label-col.starter{color:var(--accent)}
+
+.drop-hint{
+  border:1px dashed var(--line2);border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:10px;font-weight:500;min-height:54px;
+  text-align:center;padding:6px;margin:2px 0;flex:1
+}
+
+/* PLAYER CARDS */
+.pcard{
+  background:#ffffff;
+  border-radius:8px;
+  border:1px solid #d1d5db;
+  flex:1;min-width:0;
+  cursor:grab;user-select:none;position:relative;
+  transition:transform .12s,box-shadow .12s;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
+  padding:8px;
+  padding-top:26px;
+  display:flex;flex-direction:column;gap:4px;
+}
+.pcard:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.13)}
+.pcard.dragging{opacity:.4;transform:scale(.96)}
+.pcard.dimmed{opacity:.2;filter:grayscale(.7)}
+.pcard.off-pos{outline:2px solid #fbbf24;outline-offset:-2px}
+.pcard.is-varsity-card{border-top:3px solid #3b82f6}
+.pcard.is-injured{border-left:3px solid #ef4444}
+.pcard.is-transfer{border-left:3px solid #818cf8}
+.pcard.is-varsity-card.is-injured{border-top:3px solid #3b82f6;border-left:3px solid #ef4444}
+.pcard.is-varsity-card.is-transfer{border-top:3px solid #3b82f6;border-left:3px solid #818cf8}
+
+/* Dog-ear — class year, top-left */
+.card-dog-ear{
+  position:absolute;top:0;left:0;
+  width:36px;height:24px;
+  border-radius:7px 0 8px 0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:12px;letter-spacing:.03em;line-height:1;
+}
+/* Dog-ear: soft tints of app accent colors, dark text for contrast on white card */
+.dog-27{background:#fef3c7;color:#92400e}   /* warm amber — senior class */
+.dog-28{background:#dbeafe;color:#1e40af}   /* sky blue — juniors */
+.dog-29{background:#ede9fe;color:#4c1d95}   /* soft purple — sophomores */
+.dog-other{background:#f1f5f9;color:#475569}
+
+/* × remove */
+.card-x{
+  position:absolute;top:5px;right:5px;
+  width:16px;height:16px;border-radius:50%;
+  background:#fee2e2;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:#b91c1c;line-height:1;padding:0;
+  transition:background .12s;z-index:2;
+}
+.card-x:hover{background:#fecaca}
+
+/* Name */
+.card-name{
+  font-family:'Inter',sans-serif;font-weight:700;font-size:12px;
+  line-height:1.25;color:#111827;
+}
+/* Injury / Transfer — prominent full-width banner under name */
+.card-status-banner{
+  font-family:'Inter',sans-serif;font-size:10px;font-weight:700;
+  padding:3px 6px;border-radius:4px;line-height:1.3;
+  letter-spacing:.01em;
+}
+.card-status-inj     {background:#fee2e2;color:#991b1b;border-left:3px solid #ef4444}
+.card-status-transfer{background:#ede9fe;color:#4c1d95;border-left:3px solid #818cf8}
+/* Phys */
+.card-phys{
+  font-family:'Inter',sans-serif;font-size:10px;font-weight:500;
+  color:#9ca3af;letter-spacing:.01em;
+}
+/* Pills */
+.card-pills{display:flex;flex-wrap:wrap;gap:3px}
+.pill{
+  font-family:'Inter',sans-serif;font-size:10px;font-weight:600;
+  padding:2px 7px;border-radius:20px;line-height:1.4;white-space:nowrap;
+}
+/* Pills: tonal, readable on white */
+.pill-v      {background:#1e3a8a;color:#bfdbfe}  /* navy blue / light blue */
+.pill-jv     {background:#166534;color:#bbf7d0}  /* forest green / mint */
+.pill-sw     {background:#78350f;color:#fde68a}  /* amber brown / gold */
+.pill-warn   {background:#fef3c7;color:#92400e}
+.pill-inj    {background:#fee2e2;color:#991b1b}
+.pill-transfer{background:#ede9fe;color:#4c1d95}
+/* Position pills — match new group header colors */
+.pill-pos-secondary {background:#1a3a8c;color:#bfdbfe}
+.pill-pos-linebacker{background:#166534;color:#bbf7d0}
+.pill-pos-def-line  {background:#1f2937;color:#e5e7eb}
+
+/* Compact: name only */
+.pcard.compact{padding:8px;gap:0}
+.pcard.compact .card-dog-ear,
+.pcard.compact .card-phys,
+.pcard.compact .card-pills,
+.pcard.compact .card-x{display:none}
+.pcard.compact .card-name{font-size:13px;font-weight:800}
+
+.card-actions{display:flex;gap:3px;flex-wrap:wrap;margin-top:2px}
+
+.legend-bar{
+  background:#0d1117;border-top:1px solid var(--line);
+  padding:6px 16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;flex-shrink:0
+}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
+
+/* GROUP LEGEND SWATCHES */
+.group-swatch{
+  display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;
+}
+.swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+.toast{
+  position:fixed;right:18px;bottom:18px;z-index:99;
+  background:#21293a;border:1px solid var(--line2);border-radius:var(--radius-sm);
+  padding:9px 14px;font-size:12px;font-weight:600;color:var(--text);
+  display:none;box-shadow:0 8px 32px rgba(0,0,0,.5);
+}
+
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .toolbar,.stats-bar,.legend-bar,header,.roster-panel,.group-lanes,
+  .card-x,.card-actions,.mini-btn,.zone-divider-line,
+  .hbtn,.slot-label-col{display:none!important}
+  body,html{overflow:visible;background:#fff!important;color:#000!important}
+  .main{overflow:visible;display:block}
+  .chart-area{overflow:visible;padding:0}
+
+  /* Print header */
+  .print-header{display:flex!important;align-items:center;justify-content:space-between;
+    padding:6px 0 8px;border-bottom:3px solid #1a3a8c;margin-bottom:8px}
+  .print-header-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;
+    color:#1a3a8c;letter-spacing:.08em}
+  .print-header-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;
+    color:#d4a017;letter-spacing:.12em;text-transform:uppercase}
+  .print-header-date{font-size:10px;color:#666}
+
+  /* Compact grid */
+  .alignment{
+    display:grid!important;
+    grid-template-columns:repeat(11,1fr)!important;
+    gap:3px!important;min-width:0!important;
+  }
+  .alignment.groups-layout{
+    grid-template-columns:repeat(3,1fr) 4px repeat(3,1fr) 4px repeat(5,1fr)!important;
+  }
+  .group-divider{width:4px!important;background:#eee!important;border-radius:2px}
+
+  /* Position columns */
+  .pos-col{break-inside:avoid;border-width:1px!important;border-radius:4px!important}
+  .pos-head{padding:4px 3px!important}
+  .pos-code{font-size:14px!important}
+  .pos-name{font-size:7px!important}
+
+  /* Zone containers */
+  .zone-varsity{background:#e8f0fc!important;border:1px solid #1a3a8c!important;
+    border-radius:3px!important;padding:2px!important;margin-bottom:2px!important}
+  .zone-jv{background:#e8f7ed!important;border:1px solid #14532d!important;
+    border-radius:3px!important;padding:2px!important}
+  .zone-divider{margin:2px 0!important}
+  .zone-divider-label{font-size:7px!important;padding:1px 4px!important}
+
+  /* Slot rows */
+  .slot-row{gap:2px!important}
+
+  /* Compact cards — name + position + status only */
+  .pcard{
+    padding:3px 4px!important;border-radius:3px!important;
+    border-width:1px!important;box-shadow:none!important;
+    background:#fff!important;
+  }
+  .pcard.is-injured{border-left:2px solid #ef4444!important}
+  .pcard.is-transfer{border-left:2px solid #818cf8!important}
+  .pcard.is-varsity-card{border-top:2px solid #1a3a8c!important}
+  .card-name{font-size:8px!important;font-weight:700!important;
+    color:#000!important;padding-right:0!important;line-height:1.2!important}
+  .card-dpos{font-size:7px!important;font-weight:700!important;margin-bottom:1px!important}
+  .card-phys,.card-status{display:none!important}
+
+  /* Show only class badge and injury/transfer badge — hide everything else */
+  .badge{font-size:6px!important;padding:1px 3px!important}
+  .b-jv,.b-sw,.b-v,.b-warn{display:none!important}
+  .b-yr27,.b-yr28,.b-yr29,.b-yr-other{display:none!important}
+  .b-inj-return,.b-transfer{display:inline!important;font-size:6px!important;padding:1px 3px!important}
+  .drop-hint{display:none!important}
+
+  /* Print mode filter: hide dimmed cards entirely */
+  .pcard.dimmed{display:none!important}
+  .slot-row:has(.pcard.dimmed){display:none!important}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="data:image/png;base64,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" alt="OC Eagles" style="height:46px;width:auto;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))"/>
+    <div style="display:flex;flex-direction:column;gap:1px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;letter-spacing:.08em;color:#fff;line-height:1">OC EAGLES</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;color:var(--oc-gold);line-height:1">DEFENSIVE DEPTH CHART</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="hbtn primary" id="btnLoad">↺ Reload</button>
+    <button class="hbtn" id="btnAutoFill">⚡ Auto-Fill</button>
+    <button class="hbtn" id="btnSave">💾 Save</button>
+    <button class="hbtn" id="btnCsv">↓ CSV</button>
+    <label class="hbtn" id="btnImportLabel" style="cursor:pointer">↑ Import<input type="file" id="btnImport" accept=".csv" style="display:none"/></label>
+    <button class="hbtn" id="btnPrintJV">🖨 JV Chart</button>
+    <button class="hbtn" id="btnPrintV">🖨 Varsity Chart</button>
+    <button class="hbtn" id="btnPrintAll">🖨 Full Program</button>
+    <button class="hbtn danger" id="btnClear">✕ Clear</button>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-field">
+    <span class="tlabel">Search roster</span>
+    <input type="search" id="search" placeholder="Name, position…"/>
+  </div>
+  <div class="toolbar-field">
+    <span class="tlabel">Roster filter</span>
+    <select id="rosterFilter">
+      <option value="all">All Players</option>
+      <option value="unassigned">Unassigned</option>
+      <option value="defense">Has D Position</option>
+      <option value="jv">JV</option>
+      <option value="sw">Swing</option>
+      <option value="v">Varsity</option>
+      <option value="injured">Injured / Limited</option>
+    </select>
+  </div>
+  <div class="toolbar-field">
+    <span class="tlabel">Chart view</span>
+    <div class="level-filter">
+      <button class="lpill active-all" id="pillAll" data-lv="all">All</button>
+      <button class="lpill" id="pillV" data-lv="v">Varsity</button>
+      <button class="lpill" id="pillJV" data-lv="jv">JV</button>
+      <button class="lpill" id="pillSW" data-lv="sw">Swing</button>
+      <button class="lpill" id="pillJVSW" data-lv="jvsw">JV + Swing</button>
+    </div>
+  </div>
+  <div class="toolbar-field">
+    <span class="tlabel">Transfers</span>
+    <div class="level-filter">
+      <button class="lpill active-layout" id="pillTrWith" data-tr="with">With Transfers</button>
+      <button class="lpill" id="pillTrWithout" data-tr="without">Without Transfers</button>
+    </div>
+  </div>
+  <div class="toolbar-field">
+    <span class="tlabel">Card View</span>
+    <div class="level-filter">
+      <button class="lpill active-layout" id="pillDetail" data-cv="detail">Detail</button>
+      <button class="lpill" id="pillCompact" data-cv="compact">Compact</button>
+    </div>
+  </div>
+  <div class="toolbar-field">
+    <span class="tlabel">Layout</span>
+    <div class="level-filter">
+      <button class="lpill active-layout" id="pillFormation" data-layout="formation">Defensive Formation</button>
+      <button class="lpill" id="pillGroups" data-layout="groups">Position Groups</button>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-val" id="sTotal">0</div><div class="stat-label">Roster</div></div>
+  <div class="stat"><div class="stat-val" id="sAssigned">0</div><div class="stat-label">Assigned</div></div>
+  <div class="stat"><div class="stat-val" id="sPool">0</div><div class="stat-label">Pool</div></div>
+  <div class="stat"><div class="stat-val" id="sVarsity">0</div><div class="stat-label">Varsity</div></div>
+  <div class="stat"><div class="stat-val" id="sSwing">0</div><div class="stat-label">Swing</div></div>
+  <div class="stat"><div class="stat-val" id="sJVOnly">0</div><div class="stat-label">JV Only</div></div>
+  <div class="stat"><div class="stat-val" id="sInjured">0</div><div class="stat-label">Injured</div></div>
+  <div class="stat"><div class="stat-val" id="sTransfer">0</div><div class="stat-label">Transfers</div></div>
+</div>
+
+<div class="main">
+  <aside class="roster-panel">
+    <div class="panel-head">
+      <span>Roster Pool</span>
+      <span id="poolCount" style="color:var(--text);font-size:15px;font-weight:900;font-family:'Barlow Condensed',sans-serif">0</span>
+    </div>
+    <div class="pool-pos-filter" id="poolPosFilter">
+      <button class="pos-pill active" data-pos="all">All</button>
+      <button class="pos-pill secondary" data-pos="FCB">FCB</button>
+      <button class="pos-pill secondary" data-pos="SS">SS</button>
+      <button class="pos-pill secondary" data-pos="B">B</button>
+      <button class="pos-pill secondary" data-pos="FS">FS</button>
+      <button class="pos-pill secondary" data-pos="BCB">BCB</button>
+      <button class="pos-pill linebacker" data-pos="M">M</button>
+      <button class="pos-pill linebacker" data-pos="W">W</button>
+      <button class="pos-pill linebacker" data-pos="J">J</button>
+      <button class="pos-pill def-line" data-pos="E">E</button>
+      <button class="pos-pill def-line" data-pos="N">N</button>
+      <button class="pos-pill def-line" data-pos="T">T</button>
+    </div>
+    <div class="pool" id="pool" data-position="POOL"></div>
+  </aside>
+
+  <div class="chart-area">
+    <div class="group-lanes">
+      <div class="group-lane-label secondary">Secondary — FCB · SS · B</div>
+      <div class="group-lane-label linebacker">Linebackers — M · W · J</div>
+      <div class="group-lane-label def-line">D-Line — E · N · T</div>
+      <div class="group-lane-label secondary">Secondary — FS · BCB</div>
+    </div>
+    <div class="alignment" id="alignment"></div>
+  </div>
+</div>
+
+<div class="legend-bar">
+  <div class="group-swatch"><span class="swatch" style="background:#1a3a8c"></span><span style="color:#bfdbfe">Secondary</span></div>
+  <div class="group-swatch"><span class="swatch" style="background:#166534"></span><span style="color:#bbf7d0">Linebackers</span></div>
+  <div class="group-swatch"><span class="swatch" style="background:#1f2937"></span><span style="color:#e5e7eb">D-Line</span></div>
+  <div style="width:1px;background:var(--line);margin:0 4px"></div>
+  <div class="legend-item"><span class="badge b-yr27">'27</span> <span class="badge b-yr28">'28</span> <span class="badge b-yr29">'29</span> Class</div>
+  <div class="legend-item"><span class="badge b-jv">JV</span> JV</div>
+  <div class="legend-item"><span class="badge b-sw">SW</span> Swing</div>
+  <div class="legend-item"><span class="badge b-v">V</span> Varsity</div>
+  <div class="legend-item"><span class="badge b-inj">INJ</span> Injured</div>
+  <div class="legend-item"><span class="badge b-warn">⚠</span> Multi-start</div>
+  <div class="legend-item" style="margin-left:auto;color:#4a5568;font-size:10px">Drag to reorder · drop across columns to move</div>
+</div>
+
+<div class="print-header" id="printHeader" style="display:none">
+  <div>
+    <div class="print-header-logo">OC EAGLES</div>
+    <div class="print-header-title" id="printTitle">Eagles Defensive Depth Chart</div>
+  </div>
+  <div class="print-header-date" id="printDate"></div>
+</div>
+
+<!-- EDIT PLAYER MODAL -->
+<div id="editOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:60;align-items:center;justify-content:center">
+  <div id="editModal" style="background:var(--panel);border:1px solid var(--line2);border-radius:14px;width:360px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.5)">
+    <div style="padding:14px 16px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:var(--text)">Edit Player</span>
+      <button id="editClose" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1">×</button>
+    </div>
+    <div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px" id="editFields"></div>
+    <div style="padding:10px 16px 14px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end">
+      <button id="editCancel" class="hbtn">Cancel</button>
+      <button id="editSave" class="hbtn primary">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<style>
+.edit-field{display:flex;flex-direction:column;gap:4px}
+.edit-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.edit-input{background:var(--panel2);border:1px solid var(--line2);border-radius:var(--radius-sm);
+  color:var(--text);font-family:'Inter',sans-serif;font-size:13px;padding:7px 10px;outline:none;
+  transition:border-color .15s;width:100%}
+.edit-input:focus{border-color:var(--accent)}
+.edit-toggles{display:flex;gap:8px;flex-wrap:wrap}
+.etoggle{font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;
+  border:1px solid var(--line2);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.etoggle.on-jv{background:#14532d;color:#86efac;border-color:#166534}
+.etoggle.on-v{background:#1e3a8a;color:#93c5fd;border-color:#1e40af}
+.etoggle.on-sw{background:#713f12;color:#fde68a;border-color:#92400e}
+.edit-section{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:-4px}
+.pos-grid{display:flex;flex-wrap:wrap;gap:5px}
+.epos{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;
+  padding:4px 10px;border-radius:8px;border:1px solid var(--line2);
+  background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.epos.selected-secondary{background:var(--db-col);color:#bfdbfe;border-color:var(--db-border)}
+.epos.selected-linebacker{background:var(--lb-col);color:#bbf7d0;border-color:var(--lb-border)}
+.epos.selected-def-line{background:var(--dl-col);color:#e5e7eb;border-color:var(--dl-border)}
+</style>
+
+<script>
+const POSITIONS=[
+  {code:'FCB',name:'Field Corner',group:'secondary'},
+  {code:'SS',name:'Strong Safety',group:'secondary'},
+  {code:'B',name:'Bandit',group:'secondary'},
+  {code:'M',name:'Mike',group:'linebacker'},
+  {code:'W',name:'Will',group:'linebacker'},
+  {code:'E',name:'End',group:'def-line'},
+  {code:'N',name:'Nose',group:'def-line'},
+  {code:'T',name:'Tackle',group:'def-line'},
+  {code:'J',name:'Jack',group:'linebacker'},
+  {code:'FS',name:'Free Safety',group:'secondary'},
+  {code:'BCB',name:'Boundary Corner',group:'secondary'}
+];
+const POS_CODES=POSITIONS.map(p=>p.code);
+
+const ROSTER=[{"id":"jeremy-adeyanju-2027","name":"Jeremy Adeyanju","classBadge":"'27","height":72,"weight":221,"primaryPosition":"RB","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"arnel-ahmetovic-2029","name":"Arnel Ahmetovic","classBadge":"'29","height":75,"weight":202,"primaryPosition":"QB","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"gabriel-alexander-2028","name":"Gabriel Alexander","classBadge":"'28","height":69,"weight":292,"primaryPosition":"OL","dPosRaw":"N","positions":["N"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"ahmir-alexander-2029","name":"Ahmir Alexander","classBadge":"'29","height":66,"weight":180,"primaryPosition":"LB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"damarkus-allen-2027","name":"Damarkus Allen","classBadge":"'27","height":71,"weight":179,"primaryPosition":"CB","dPosRaw":"CB","positions":["FCB"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"anthony-alvarado-2029","name":"Anthony Alvarado","classBadge":"'29","height":67,"weight":184,"primaryPosition":"RB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"ryland-arnold-2029","name":"Ryland Arnold","classBadge":"'29","height":64,"weight":113,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"karson-ayers-2028","name":"Karson Ayers","classBadge":"'28","height":0,"weight":0,"primaryPosition":"QB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"ryelan-barzee-2029","name":"Ryelan Barzee","classBadge":"'29","height":73,"weight":195,"primaryPosition":"DB","dPosRaw":"SS","positions":["SS"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"jorge-beltran-2027","name":"Jorge Beltran","classBadge":"'27","height":68,"weight":153,"primaryPosition":"CB","dPosRaw":"CB","positions":["FCB"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"mason-bemrich-2027","name":"Mason Bemrich","classBadge":"'27","height":72,"weight":152,"primaryPosition":"DB","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"rohit-bestvater-2028","name":"Rohit Bestvater","classBadge":"'28","height":67,"weight":141,"primaryPosition":"WR","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"chase-bigler-2027","name":"Chase Bigler","classBadge":"'27","height":73,"weight":208,"primaryPosition":"LB","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"dashyl-bizardi-2028","name":"Dashyl Bizardi","classBadge":"'28","height":70,"weight":162,"primaryPosition":"DB","dPosRaw":"BC","positions":["BCB"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"damien-black-2029","name":"Damien Black","classBadge":"'29","height":74,"weight":177,"primaryPosition":"LB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"cole-bojanowski-2028","name":"Cole Bojanowski","classBadge":"'28","height":75,"weight":160,"primaryPosition":"DB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"kole-bott-2029","name":"Kole Bott","classBadge":"'29","height":66,"weight":115,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"jackson-brewer-2029","name":"Jackson Brewer","classBadge":"'29","height":72,"weight":157,"primaryPosition":"CB","dPosRaw":"FC","positions":["FCB"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"garrison-burtis-2027","name":"Garrison Burtis","classBadge":"'27","height":72,"weight":178,"primaryPosition":"K","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"daniel-carbajal-2028","name":"Daniel Carbajal","classBadge":"'28","height":70,"weight":212,"primaryPosition":"LB","dPosRaw":"J","positions":["J"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"October Transfer","jersey":""},{"id":"xavier-castro-2027","name":"Xavier Castro","classBadge":"'27","height":72,"weight":238,"primaryPosition":"DL","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"jacob-chapin-2028","name":"Jacob Chapin","classBadge":"'28","height":70,"weight":162,"primaryPosition":"CB","dPosRaw":"BC","positions":["BCB"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"ashton-childers-2028","name":"Ashton Childers","classBadge":"'28","height":72,"weight":239,"primaryPosition":"DL","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"hudson-connell-2028","name":"Hudson Connell","classBadge":"'28","height":72,"weight":182,"primaryPosition":"DB","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"June","jersey":""},{"id":"zaza-cruse-2028","name":"Zaza Cruse","classBadge":"'28","height":72,"weight":159,"primaryPosition":"WR","dPosRaw":"FS","positions":["FS"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"daniel-currence-2028","name":"Daniel Currence","classBadge":"'28","height":73,"weight":151,"primaryPosition":"WR","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"weston-dortenzio-2029","name":"Weston D'Ortenzio","classBadge":"'29","height":64,"weight":122,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"jayden-davis-2028","name":"Jayden Davis","classBadge":"'28","height":0,"weight":0,"primaryPosition":"DB","dPosRaw":"BC","positions":["BCB"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"kweli-davis-2028","name":"Kweli Davis","classBadge":"'28","height":74,"weight":265,"primaryPosition":"DL","dPosRaw":"N","positions":["N"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"cody-dodge-2027","name":"Cody Dodge","classBadge":"'27","height":68,"weight":195,"primaryPosition":"LB","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"avram-dominguez-2029","name":"Avram Dominguez","classBadge":"'29","height":67,"weight":127,"primaryPosition":"DB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"brady-dorsey-2027","name":"Brady Dorsey","classBadge":"'27","height":68,"weight":162,"primaryPosition":"WR","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"aiden-dreyer-evans-2027","name":"Aiden Dreyer-Evans","classBadge":"'27","height":74,"weight":223,"primaryPosition":"DL","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"matteo-duran-2028","name":"Matteo Duran","classBadge":"'28","height":70,"weight":165,"primaryPosition":"LB","dPosRaw":"M","positions":["M"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"cade-dye-2029","name":"Cade Dye","classBadge":"'29","height":73,"weight":170,"primaryPosition":"LB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"colton-fahndrich-2029","name":"Colton Fahndrich","classBadge":"'29","height":70,"weight":180,"primaryPosition":"RB","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"mason-ferreira-2029","name":"Mason Ferreira","classBadge":"'29","height":69,"weight":133,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"maksym-frugone-2027","name":"Maksym Frugone","classBadge":"'27","height":70,"weight":168,"primaryPosition":"DB","dPosRaw":"FS","positions":["FS"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"karson-gaines-2029","name":"Karson Gaines","classBadge":"'29","height":69,"weight":161,"primaryPosition":"LB","dPosRaw":"W","positions":["W"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"joseph-gardner-2028","name":"Joseph Gardner","classBadge":"'28","height":68,"weight":132,"primaryPosition":"LB","dPosRaw":"FS","positions":["FS"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"cameron-geoco-2029","name":"Cameron Geoco","classBadge":"'29","height":71,"weight":170,"primaryPosition":"RB","dPosRaw":"W","positions":["W"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"dylan-gold-2028","name":"Dylan Gold","classBadge":"'28","height":0,"weight":0,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"kasch-gray-2028","name":"Kasch Gray","classBadge":"'28","height":68,"weight":214,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"jake-gumbert-2028","name":"Jake Gumbert","classBadge":"'28","height":71,"weight":176,"primaryPosition":"WR","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"clifford-guss-2027","name":"Clifford Guss","classBadge":"'27","height":74,"weight":206,"primaryPosition":"TE","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"derek-hale-2029","name":"Derek Hale","classBadge":"'29","height":74,"weight":177,"primaryPosition":"DB","dPosRaw":"FS","positions":["FS"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"greyson-hasl-2029","name":"Greyson Hasl","classBadge":"'29","height":71,"weight":177,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"jacob-heaton-2028","name":"Jacob Heaton","classBadge":"'28","height":69,"weight":173,"primaryPosition":"LB","dPosRaw":"M","positions":["M"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"joel-hernandez-2028","name":"Joel Hernandez","classBadge":"'28","height":71,"weight":209,"primaryPosition":"LB","dPosRaw":"J","positions":["J"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"tye-hernandez-2029","name":"Tye Hernandez","classBadge":"'29","height":70,"weight":181,"primaryPosition":"DL","dPosRaw":"E","positions":["E"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"gabriel-holloway-2029","name":"Gabriel Holloway","classBadge":"'29","height":69,"weight":139,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"cashton-hulsey-2029","name":"Cashton Hulsey","classBadge":"'29","height":69,"weight":138,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"aiden-hurley-2028","name":"Aiden Hurley","classBadge":"'28","height":68,"weight":163,"primaryPosition":"DB","dPosRaw":"FS","positions":["FS"],"isJV":false,"isSwing":true,"isVarsity":false,"injury":"","jersey":""},{"id":"nolan-johnson-2029","name":"Nolan Johnson","classBadge":"'29","height":69,"weight":152,"primaryPosition":"CB","dPosRaw":"BC","positions":["BCB"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"clayton-joralmon-2029","name":"Clayton Joralmon","classBadge":"'29","height":72,"weight":154,"primaryPosition":"LB","dPosRaw":"M","positions":["M"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"zachary-jordan-2029","name":"Zachary Jordan","classBadge":"'29","height":74,"weight":158,"primaryPosition":"WR","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"atreyu-keith-2029","name":"Atreyu Keith","classBadge":"'29","height":66,"weight":167,"primaryPosition":"LB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"david-kimball-2027","name":"David Kimball","classBadge":"'27","height":78,"weight":176,"primaryPosition":"P","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"deagan-lacombe-2027","name":"Deagan LaCombe","classBadge":"'27","height":69,"weight":231,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"hayden-lawler-2028","name":"Hayden Lawler","classBadge":"'28","height":70,"weight":152,"primaryPosition":"CB","dPosRaw":"BC","positions":["BCB"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"alberto-loera-2029","name":"Alberto Loera","classBadge":"'29","height":68,"weight":139,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"braylon-logan-2027","name":"Braylon Logan","classBadge":"'27","height":76,"weight":229,"primaryPosition":"LS","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"braylon-lopez-2028","name":"Braylon Lopez","classBadge":"'28","height":71,"weight":159,"primaryPosition":"CB","dPosRaw":"BC","positions":["BCB"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"easton-mcclanahan-2027","name":"Easton McClanahan","classBadge":"'27","height":71,"weight":185,"primaryPosition":"DB","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"tredell-mcintyre-2029","name":"Tredell Mcintyre","classBadge":"'29","height":0,"weight":0,"primaryPosition":"DL","dPosRaw":"N","positions":["N"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"jackson-mcnab-2029","name":"Jackson McNab","classBadge":"'29","height":70,"weight":153,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"roque-mendiola-2028","name":"Roque Mendiola","classBadge":"'28","height":73,"weight":187,"primaryPosition":"DB","dPosRaw":"B","positions":["B"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"Transfer","jersey":""},{"id":"rylan-milks-2029","name":"Rylan Milks","classBadge":"'29","height":74,"weight":172,"primaryPosition":"DB","dPosRaw":"FS","positions":["FS"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"gabriel-miller-2029","name":"Gabriel Miller","classBadge":"'29","height":71,"weight":171,"primaryPosition":"WR","dPosRaw":"B","positions":["B"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"brodie-moore-2027","name":"Brodie Moore","classBadge":"'27","height":71,"weight":174,"primaryPosition":"QB","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"gavin-munger-2029","name":"Gavin Munger","classBadge":"'29","height":67,"weight":168,"primaryPosition":"DL","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"ryder-nettles-2028","name":"Ryder Nettles","classBadge":"'28","height":68,"weight":144,"primaryPosition":"DB","dPosRaw":"SS","positions":["SS"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"joshua-nixon-2029","name":"Joshua Nixon","classBadge":"'29","height":70,"weight":197,"primaryPosition":"DL","dPosRaw":"T","positions":["T"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"August","jersey":""},{"id":"caleb-nold-2027","name":"Caleb Nold","classBadge":"'27","height":73,"weight":247,"primaryPosition":"DL","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"gabriel-olague-2029","name":"Gabriel Olague","classBadge":"'29","height":72,"weight":225,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"nicholas-peifer-2029","name":"Nicholas Peifer","classBadge":"'29","height":72,"weight":156,"primaryPosition":"LB","dPosRaw":"W","positions":["W"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"gideon-penzkover-2028","name":"Gideon Penzkover","classBadge":"'28","height":72,"weight":175,"primaryPosition":"DB","dPosRaw":"FC","positions":["FCB"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"luis-ponce-2028","name":"Luis Ponce","classBadge":"'28","height":70,"weight":220,"primaryPosition":"QB","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"christopher-powell-2028","name":"Christopher Powell","classBadge":"'28","height":73,"weight":220,"primaryPosition":"DL","dPosRaw":"E","positions":["E"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"jayce-rainey-2029","name":"Jayce Rainey","classBadge":"'29","height":76,"weight":292,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"isaac-rangel-2029","name":"Isaac Rangel","classBadge":"'29","height":68,"weight":148,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"max-ricart-2028","name":"Max Ricart","classBadge":"'28","height":72,"weight":192,"primaryPosition":"LB","dPosRaw":"M","positions":["M"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"anthony-rico-2029","name":"Anthony Rico","classBadge":"'29","height":68,"weight":155,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"gianmarco-ristanovich-2029","name":"Gianmarco Ristanovich","classBadge":"'29","height":68,"weight":185,"primaryPosition":"LB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"malik-robinson-2027","name":"Malik Robinson","classBadge":"'27","height":69,"weight":177,"primaryPosition":"LB","dPosRaw":"W","positions":["W"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"hayden-rodgers-2028","name":"Hayden Rodgers","classBadge":"'28","height":69,"weight":131,"primaryPosition":"CB","dPosRaw":"FC","positions":["FCB"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"dominic-rodriguez-2028","name":"Dominic Rodriguez","classBadge":"'28","height":67,"weight":310,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"jason-roose-2028","name":"Jason Roose","classBadge":"'28","height":74,"weight":220,"primaryPosition":"LS","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"trevor-ruocco-2027","name":"Trevor Ruocco","classBadge":"'27","height":72,"weight":291,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"carter-ryan-2029","name":"Carter Ryan","classBadge":"'29","height":74,"weight":227,"primaryPosition":"DL","dPosRaw":"N","positions":["N"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"greyson-sarres-2029","name":"Greyson Sarres","classBadge":"'29","height":69,"weight":159,"primaryPosition":"","dPosRaw":"B","positions":["B"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"liam-schumm-2029","name":"Liam Schumm","classBadge":"'29","height":70,"weight":234,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"van-shafer-2029","name":"Van Shafer","classBadge":"'29","height":68,"weight":153,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"tyler-shakespeare-2028","name":"Tyler Shakespeare","classBadge":"'28","height":71,"weight":252,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"taye-shoesmith-2028","name":"Taye Shoesmith","classBadge":"'28","height":71,"weight":160,"primaryPosition":"DB","dPosRaw":"SS","positions":["SS"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"jaxon-simons-2027","name":"Jaxon Simons","classBadge":"'27","height":74,"weight":193,"primaryPosition":"WR","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"eknoor-singh-2029","name":"Eknoor Singh","classBadge":"'29","height":69,"weight":193,"primaryPosition":"DL","dPosRaw":"N","positions":["N"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"dallas-slade-2028","name":"Dallas Slade","classBadge":"'28","height":74,"weight":192,"primaryPosition":"WR","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"noah-smith-2029","name":"Noah Smith","classBadge":"'29","height":70,"weight":169,"primaryPosition":"LB","dPosRaw":"T","positions":["T"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"william-spata-2029","name":"William Spata","classBadge":"'29","height":68,"weight":140,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"joseph-spata-2029","name":"Joseph Spata","classBadge":"'29","height":72,"weight":159,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"nikos-stavro-2027","name":"Nikos Stavro","classBadge":"'27","height":75,"weight":242,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"antonius-tannaz-2027","name":"Antonius Tannaz","classBadge":"'27","height":69,"weight":159,"primaryPosition":"CB","dPosRaw":"CB","positions":["FCB"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"mario-texas-2029","name":"Mario Texas","classBadge":"'29","height":64,"weight":134,"primaryPosition":"DB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"micah-trevino-2029","name":"Micah Trevino","classBadge":"'29","height":70,"weight":247,"primaryPosition":"OL","dPosRaw":"N","positions":["N"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"seth-trojan-2029","name":"Seth Trojan","classBadge":"'29","height":70,"weight":151,"primaryPosition":"WR","dPosRaw":"","positions":[],"isJV":false,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"joshua-tupper-2029","name":"Joshua Tupper","classBadge":"'29","height":66,"weight":202,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"jon-venero-2029","name":"Jon Venero","classBadge":"'29","height":69,"weight":230,"primaryPosition":"DL","dPosRaw":"E","positions":["E"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"hayden-walker-2029","name":"Hayden Walker","classBadge":"'29","height":69,"weight":226,"primaryPosition":"DL","dPosRaw":"N","positions":["N"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"gage-watson-2028","name":"Gage Watson","classBadge":"'28","height":66,"weight":172,"primaryPosition":"RB","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"taiven-weaver-2029","name":"Taiven Weaver","classBadge":"'29","height":65,"weight":125,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"dawson-wiggins-2028","name":"Dawson Wiggins","classBadge":"'28","height":68,"weight":179,"primaryPosition":"LB","dPosRaw":"W","positions":["W"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"drew-wilcock-2029","name":"Drew Wilcock","classBadge":"'29","height":0,"weight":0,"primaryPosition":"","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"parker-williams-2028","name":"Parker Williams","classBadge":"'28","height":71,"weight":196,"primaryPosition":"DB","dPosRaw":"B","positions":["B"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"jayden-wingler-2029","name":"Jayden Wingler","classBadge":"'29","height":73,"weight":213,"primaryPosition":"LB","dPosRaw":"J","positions":["J"],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"peyton-wittbrodt-2028","name":"Peyton Wittbrodt","classBadge":"'28","height":66,"weight":230,"primaryPosition":"OL","dPosRaw":"","positions":[],"isJV":true,"isSwing":true,"isVarsity":true,"injury":"","jersey":""},{"id":"montrell-woodard-2029","name":"Montrell Woodard","classBadge":"'29","height":70,"weight":205,"primaryPosition":"LB","dPosRaw":"W","positions":["W"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"gavin-ybarra-2029","name":"Gavin Ybarra","classBadge":"'29","height":68,"weight":125,"primaryPosition":"DB","dPosRaw":"","positions":[],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"","jersey":""},{"id":"jovon-young-2027","name":"Jovon Young","classBadge":"'27","height":74,"weight":190,"primaryPosition":"DB","dPosRaw":"SS","positions":["SS"],"isJV":false,"isSwing":false,"isVarsity":true,"injury":"","jersey":""},{"id":"cameron-zuhlke-2029","name":"Cameron Zuhlke","classBadge":"'29","height":68,"weight":122,"primaryPosition":"DB","dPosRaw":"BC","positions":["BCB"],"isJV":true,"isSwing":false,"isVarsity":false,"injury":"July","jersey":""}];
+
+const STORE_KEY='oc-jv-dc-v4';
+let players=[];
+let assignments={POOL:[]};
+POS_CODES.forEach(c=>assignments[c]=[]);
+let levelView='all';
+let layoutView='formation';
+let poolPosFilter='all';
+let transferView='with';
+let cardView='detail';
+let dragSrcId=null;
+let dragSrcList=null;
+
+function isTransfer(p){return /transfer/i.test(p.injury||'');}
+
+function passesLevel(p){
+  if(transferView==='without'&&isTransfer(p)) return false;
+  if(levelView==='all') return true;
+  if(levelView==='v') return p.isVarsity;
+  if(levelView==='jv') return p.isJV && !p.isVarsity;
+  if(levelView==='sw') return p.isSwing;
+  if(levelView==='jvsw') return (p.isJV && !p.isVarsity) || p.isSwing;
+  return true;
+}
+
+const $=id=>document.getElementById(id);
+function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',2000)}
+function getPlayer(id){return players.find(p=>p.id===id)}
+function allAssigned(){return POS_CODES.flatMap(c=>assignments[c]||[])}
+function startCount(id){return POS_CODES.filter(c=>(assignments[c]||[])[0]===id).length}
+function isInChart(id){return POS_CODES.some(c=>(assignments[c]||[]).includes(id))}
+
+
+
+function clean(){
+  const all=new Set(players.map(p=>p.id));
+  POS_CODES.forEach(c=>assignments[c]=(assignments[c]||[]).filter(id=>all.has(id)));
+  assignments.POOL=(assignments.POOL||[]).filter(id=>all.has(id));
+  players.forEach(p=>{
+    if(!assignments.POOL.includes(p.id)&&!isInChart(p.id)) assignments.POOL.push(p.id);
+  });
+  assignments.POOL=[...new Set(assignments.POOL)];
+}
+
+function buildCard(p,context){
+  const offPos=context!=='POOL'&&p.positions.length&&!p.positions.includes(context);
+  const dimmed=context!=='POOL'&&!passesLevel(p);
+  const art=document.createElement('article');
+  let cls='pcard';
+  if(offPos) cls+=' off-pos';
+  if(p.injury){
+    if(/transfer/i.test(p.injury)) cls+=' is-transfer';
+    else cls+=' is-injured';
+  }
+  if(p.isVarsity) cls+=' is-varsity-card';
+  if(dimmed) cls+=' dimmed';
+  if(context!=='POOL'&&cardView==='compact') cls+=' compact';
+  art.className=cls;
+  art.draggable=true;
+  art.dataset.id=p.id;
+
+  const posDisplay=p.positions.length?p.positions.join(' | '):(p.dPosRaw||'—');
+  const dposClass=context!=='POOL'&&POS_CODES.includes(context)?`dpos-${context}`:(p.positions.length===1?`dpos-${p.positions[0]}`:'dpos-multi');
+
+  function posDisplayHtml(){
+    if(context!=='POOL') return `<span>${esc(posDisplay)}</span>`;
+    if(!p.positions.length) return `<span class="dpos-multi">${esc(p.dPosRaw||'—')}</span>`;
+    return p.positions.map(pos=>`<span class="dpos-${POS_CODES.includes(pos)?pos:'multi'}">${esc(pos)}</span>`).join('<span style="color:#cbd5e1"> | </span>');
+  }
+  const physParts=[];
+  if(p.height>0) physParts.push(`${Math.floor(p.height/12)}'${p.height%12}"`);
+  if(p.weight>0) physParts.push(p.weight+' lb');
+  const phys=physParts.join(' · ');
+
+  function classBadgeHtml(raw){
+    const digits=String(raw||'').replace(/[^0-9]/g,'').slice(-2);
+    const label=digits?`'${digits}`:raw||'?';
+    const cls=digits==='27'?'b-yr27':digits==='28'?'b-yr28':digits==='29'?'b-yr29':'b-yr-other';
+    return `<span class="badge ${cls}">${label}</span>`;
+  }
+
+  const badges=[classBadgeHtml(p.classBadge)];
+  if(p.isJV&&!p.isVarsity) badges.push('<span class="badge b-jv">JV</span>');
+  if(p.isSwing) badges.push('<span class="badge b-sw">SW</span>');
+  if(p.isVarsity) badges.push('<span class="badge b-v">V</span>');
+  if(startCount(p.id)>1) badges.push('<span class="badge b-warn">⚠</span>');
+  if(p.injury){
+    const inj=p.injury.trim();
+    const isTransfer=/transfer/i.test(inj);
+    if(isTransfer){
+      const when=inj.replace(/transfer/i,'').trim();
+      const label=when?`⇄ ${when} Transfer`:'⇄ Transfer';
+      badges.push(`<span class="badge b-transfer" title="${esc(inj)}">${esc(label)}</span>`);
+    } else {
+      badges.push(`<span class="badge b-inj-return" title="${esc(inj)}">INJ · Ret. ${esc(inj)}</span>`);
+    }
+  }
+
+  const removeBtn=context!=='POOL'?`<button class="card-x" data-move="POOL" title="Remove">×</button>`:'';
+  let actions='';
+  if(context==='POOL'){
+    actions=`<div class="card-actions">
+      <button class="mini-btn edit-btn" data-edit="${esc(p.id)}">✎ Edit</button>
+    </div>`;
+  }
+
+  // Dog-ear class year — no apostrophe
+  const clsDigits=String(p.classBadge||'').replace(/[^0-9]/g,'').slice(-2);
+  const dogCls=clsDigits==='27'?'card-dog-ear dog-27':clsDigits==='28'?'card-dog-ear dog-28':clsDigits==='29'?'card-dog-ear dog-29':'card-dog-ear dog-other';
+  const dogLbl=clsDigits||p.classBadge||'';
+
+  // Pill badges — level, swing, warn only (no injury/transfer here)
+  const pills=[];
+  if(p.isVarsity) pills.push('<span class="pill pill-v">Varsity</span>');
+  else if(p.isJV) pills.push('<span class="pill pill-jv">JV</span>');
+  if(p.isSwing) pills.push('<span class="pill pill-sw">Swing</span>');
+  if(startCount(p.id)>1) pills.push('<span class="pill pill-warn">⚠ Multi</span>');
+
+  // Injury / transfer — prominent banner directly under name
+  let statusBanner='';
+  if(p.injury){
+    const inj=p.injury.trim();
+    if(/transfer/i.test(inj)){
+      const when=inj.replace(/transfer/i,'').trim();
+      statusBanner=`<div class="card-status-banner card-status-transfer">⇄ ${esc(when?when+' Transfer':'Transfer')}</div>`;
+    } else {
+      statusBanner=`<div class="card-status-banner card-status-inj">⚕ INJ · Returns ${esc(inj)}</div>`;
+    }
+  }
+
+  // Position pill — use group color
+  function posPillHtml(){
+    if(context==='POOL'){
+      if(!p.positions.length) return p.dPosRaw?`<span class="pill pill-pos-secondary card-dpos dpos-multi">${esc(p.dPosRaw)}</span>`:'';
+      return p.positions.map(pos=>{
+        const posObj=POSITIONS.find(x=>x.code===pos);
+        const grp=posObj?posObj.group:'secondary';
+        return `<span class="pill pill-pos-${grp} card-dpos dpos-${pos}">${pos}</span>`;
+      }).join(' ');
+    }
+    if(!POS_CODES.includes(context)) return '';
+    const posObj=POSITIONS.find(x=>x.code===context);
+    const grp=posObj?posObj.group:'secondary';
+    return `<span class="pill pill-pos-${grp} card-dpos dpos-${context}">${context}</span>`;
+  }
+
+  art.innerHTML=`
+    ${dogLbl?`<div class="${dogCls}">${esc(dogLbl)}</div>`:''}
+    ${removeBtn}
+    <div class="card-name">${esc(p.name)}</div>
+    ${statusBanner}
+    ${phys?`<div class="card-phys">${esc(phys)}</div>`:''}
+    ${pills.length?`<div class="card-pills">${pills.join('')}</div>`:''}
+    <div class="card-pills">${posPillHtml()}</div>
+    ${actions}
+  `;
+
+  art.addEventListener('dragstart',e=>{
+    art.classList.add('dragging');
+    dragSrcId=p.id;
+    dragSrcList=context;
+    e.dataTransfer.setData('text/plain',p.id);
+    e.dataTransfer.effectAllowed='move';
+  });
+  art.addEventListener('dragend',()=>{
+    art.classList.remove('dragging');
+    document.querySelectorAll('.slot-drag-over-top,.slot-drag-over-bottom').forEach(el=>{
+      el.classList.remove('slot-drag-over-top','slot-drag-over-bottom');
+    });
+  });
+  art.querySelectorAll('[data-move]').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation();move(p.id,b.dataset.move);
+  }));
+  art.querySelectorAll('.edit-btn').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation();openEditModal(p.id);
+  }));
+
+  if(context!=='POOL'){
+    art.addEventListener('dragover',e=>{
+      e.preventDefault();e.stopPropagation();
+      const row=art.closest('.slot-row');if(!row)return;
+      document.querySelectorAll('.slot-drag-over-top,.slot-drag-over-bottom').forEach(el=>{
+        el.classList.remove('slot-drag-over-top','slot-drag-over-bottom');
+      });
+      const rect=art.getBoundingClientRect();
+      const mid=rect.top+rect.height/2;
+      row.classList.add(e.clientY<mid?'slot-drag-over-top':'slot-drag-over-bottom');
+    });
+    art.addEventListener('dragleave',()=>{
+      const row=art.closest('.slot-row');
+      if(row){row.classList.remove('slot-drag-over-top','slot-drag-over-bottom');}
+    });
+    art.addEventListener('drop',e=>{
+      e.preventDefault();e.stopPropagation();
+      const row=art.closest('.slot-row');
+      const targetId=p.id;
+      const srcId=dragSrcId;
+      if(!srcId||srcId===targetId)return;
+      const rect=art.getBoundingClientRect();
+      const insertBefore=e.clientY<(rect.top+rect.height/2);
+      reorderInto(srcId,targetId,context,insertBefore);
+    });
+  }
+
+  return art;
+}
+
+function tagPosition(id,target){
+  const p=getPlayer(id);
+  if(!p) return;
+  if(target==='POOL'){
+    p.positions=p.positions.filter(pos=>!POS_CODES.includes(pos)||p.dPosRaw.toUpperCase().split(/[|,\s]+/).includes(pos));
+  } else if(POS_CODES.includes(target)&&!p.positions.includes(target)){
+    p.positions=[...p.positions.filter(pos=>!POS_CODES.includes(pos)||p.dPosRaw.toUpperCase().split(/[|,\s]+/).includes(pos)),target];
+  }
+}
+
+function move(id,target){
+  Object.keys(assignments).forEach(k=>assignments[k]=(assignments[k]||[]).filter(x=>x!==id));
+  assignments[target]=assignments[target]||[];
+  assignments[target].push(id);
+  tagPosition(id,target);
+  render();
+}
+
+function reorderInto(srcId,targetId,targetPos,insertBefore){
+  Object.keys(assignments).forEach(k=>assignments[k]=(assignments[k]||[]).filter(x=>x!==srcId));
+  const list=assignments[targetPos]||(assignments[targetPos]=[]);
+  const idx=list.indexOf(targetId);
+  if(idx===-1){list.push(srcId);}
+  else{list.splice(insertBefore?idx:idx+1,0,srcId);}
+  tagPosition(srcId,targetPos);
+  render();
+}
+
+function wireListDrop(el,posCode){
+  el.addEventListener('dragover',e=>{e.preventDefault();el.classList.add('list-drag-over')});
+  el.addEventListener('dragleave',()=>el.classList.remove('list-drag-over'));
+  el.addEventListener('drop',e=>{
+    e.preventDefault();el.classList.remove('list-drag-over');
+    const id=e.dataTransfer.getData('text/plain');
+    if(id&&!document.querySelector('.slot-drag-over-top,.slot-drag-over-bottom')){
+      move(id,posCode);
+    }
+  });
+}
+
+function renderStats(){
+  $('sTotal').textContent=players.length;
+  $('sAssigned').textContent=allAssigned().length;
+  $('sPool').textContent=(assignments.POOL||[]).length;
+  $('poolCount').textContent=(assignments.POOL||[]).length;
+  $('sVarsity').textContent=players.filter(p=>p.isVarsity).length;
+  $('sSwing').textContent=players.filter(p=>p.isSwing).length;
+  $('sJVOnly').textContent=players.filter(p=>p.isJV&&!p.isVarsity&&!p.isSwing).length;
+  $('sInjured').textContent=players.filter(p=>p.injury&&!isTransfer(p)).length;
+  $('sTransfer').textContent=players.filter(p=>isTransfer(p)).length;
+}
+
+function renderPool(){
+  const pool=$('pool');pool.innerHTML='';
+  const q=$('search').value.trim().toLowerCase();
+  const f=$('rosterFilter').value;
+  const ids=(assignments.POOL||[]).filter(id=>{
+    const p=getPlayer(id);if(!p)return false;
+    if(q){const hay=[p.name,p.classBadge,p.primaryPosition,p.dPosRaw,p.positions.join(' '),p.height,p.weight].join(' ').toLowerCase();if(!hay.includes(q))return false;}
+    if(f==='defense') return p.positions.length>0;
+    if(f==='jv') return p.isJV;
+    if(f==='sw') return p.isSwing;
+    if(f==='v') return p.isVarsity;
+    if(f==='injured') return !!p.injury;
+    if(poolPosFilter!=='all') return p.positions.includes(poolPosFilter)||(p.dPosRaw&&p.dPosRaw.toUpperCase().split(/[|,\s]+/).includes(poolPosFilter));
+    return true;
+  });
+  if(!ids.length){pool.innerHTML='<div class="drop-hint">No players match filter</div>';}
+  else ids.forEach(id=>{const p=getPlayer(id);if(p)pool.appendChild(buildCard(p,'POOL'));});
+
+  pool.addEventListener('dragover',e=>{e.preventDefault();pool.classList.add('list-drag-over')});
+  pool.addEventListener('dragleave',()=>pool.classList.remove('list-drag-over'));
+  pool.addEventListener('drop',e=>{
+    e.preventDefault();pool.classList.remove('list-drag-over');
+    const id=e.dataTransfer.getData('text/plain');
+    if(id) move(id,'POOL');
+  });
+}
+
+function isVarsityZone(p, i){
+  // Varsity zone: top 2 slots, OR '27 class, OR varsity-only (not JV, not swing)
+  if(i < 2) return true;
+  if(p.classBadge === "'27") return true;
+  if(p.isVarsity && !p.isJV && !p.isSwing) return true;
+  return false;
+}
+
+function buildSlotRow(p, globalIdx, zoneIdx, posCode){
+  const row=document.createElement('div');
+  row.className='slot-row';
+  const lbl=document.createElement('div');
+  lbl.className='slot-label-col'+(zoneIdx===0?' starter':'');
+  lbl.textContent=`${zoneIdx+1}`;
+  row.appendChild(lbl);
+  row.appendChild(buildCard(p,posCode));
+  return row;
+}
+
+function buildPosCol(pos){
+  const col=document.createElement('div');
+  col.className=`pos-col ${pos.group}`;
+  const head=document.createElement('div');
+  head.className=`pos-head ${pos.group}`;
+  head.innerHTML=`<div class="pos-code">${pos.code}</div><div class="pos-name">${pos.name}</div>`;
+  col.appendChild(head);
+
+  const sl=document.createElement('div');
+  sl.className='slot-list';
+  wireListDrop(sl,pos.code);
+
+  const ids=assignments[pos.code]||[];
+  if(!ids.length){
+    sl.innerHTML='<div class="drop-hint">Drop here</div>';
+  } else {
+    const varsityItems=[];
+    const jvItems=[];
+    ids.forEach((id,i)=>{
+      const p=getPlayer(id);if(!p)return;
+      if(isVarsityZone(p,i)) varsityItems.push({p,i});
+      else jvItems.push({p,i});
+    });
+
+    // Varsity zone — depth restarts at 1
+    if(varsityItems.length){
+      const vZone=document.createElement('div');
+      vZone.className='zone-varsity';
+      const vHeader=document.createElement('div');
+      vHeader.className='zone-divider';
+      vHeader.innerHTML='<div class="zone-divider-line"></div><div class="zone-divider-label v-label">Varsity</div><div class="zone-divider-line"></div>';
+      vZone.appendChild(vHeader);
+      varsityItems.forEach(({p,i},zi)=>vZone.appendChild(buildSlotRow(p,i,zi,pos.code)));
+      sl.appendChild(vZone);
+    }
+
+    // JV zone — depth restarts at 1 independently
+    if(jvItems.length){
+      const jvDiv=document.createElement('div');
+      jvDiv.className='zone-divider';
+      jvDiv.innerHTML='<div class="zone-divider-line"></div><div class="zone-divider-label jv-label">JV Available</div><div class="zone-divider-line"></div>';
+      sl.appendChild(jvDiv);
+
+      const jvZone=document.createElement('div');
+      jvZone.className='zone-jv';
+      jvItems.forEach(({p,i},zi)=>jvZone.appendChild(buildSlotRow(p,i,zi,pos.code)));
+      sl.appendChild(jvZone);
+    }
+  }
+  col.appendChild(sl);
+  return col;
+}
+
+function renderGroupLanes(){
+  const gl=document.querySelector('.group-lanes');
+  if(!gl) return;
+  if(layoutView==='formation'){
+    gl.style.display='none';
+  } else {
+    gl.style.display='';
+    gl.className='group-lanes';
+    gl.style.gridTemplateColumns='3fr 14px 3fr 14px 5fr';
+    gl.innerHTML=`
+      <div class="group-lane-label def-line">D-Line — E · N · T</div>
+      <div></div>
+      <div class="group-lane-label linebacker">Linebackers — M · W · J</div>
+      <div></div>
+      <div class="group-lane-label secondary">Secondary — FCB · SS · B · FS · BCB</div>`;
+  }
+}
+
+function renderAlignment(){
+  const al=$('alignment');al.innerHTML='';
+  if(layoutView==='formation'){
+    al.className='alignment';
+    POSITIONS.forEach(pos=>al.appendChild(buildPosCol(pos)));
+  } else {
+    al.className='alignment groups-layout';
+    const groups=[
+      POSITIONS.filter(p=>p.group==='def-line'),
+      POSITIONS.filter(p=>p.group==='linebacker'),
+      POSITIONS.filter(p=>p.group==='secondary'),
+    ];
+    groups.forEach((grpPositions,gi)=>{
+      if(gi>0){
+        const div=document.createElement('div');
+        div.className='group-divider';
+        al.appendChild(div);
+      }
+      grpPositions.forEach(pos=>al.appendChild(buildPosCol(pos)));
+    });
+  }
+  renderGroupLanes();
+}
+
+function render(){clean();renderStats();renderPool();renderAlignment();}
+
+function setLevel(lv){
+  levelView=lv;
+  document.querySelectorAll('.lpill').forEach(b=>{
+    b.className='lpill';
+    if(b.dataset.lv===lv) b.classList.add(`active-${lv}`);
+  });
+  renderAlignment();
+}
+
+function autoFill(){
+  POS_CODES.forEach(c=>assignments[c]=[]);
+  assignments.POOL=players.map(p=>p.id);
+  players.forEach(p=>{
+    p.positions.forEach(pos=>{
+      if(POS_CODES.includes(pos)&&!isInChart(p.id)){
+        Object.keys(assignments).forEach(k=>assignments[k]=assignments[k].filter(x=>x!==p.id));
+        assignments[pos].push(p.id);
+      }
+    });
+  });
+  clean();render();toast(`Auto-filled ${allAssigned().length} players`);
+}
+
+function initPlayers(){
+  players=ROSTER.map(p=>({...p}));
+  assignments={POOL:players.map(p=>p.id)};
+  POS_CODES.forEach(c=>assignments[c]=[]);
+}
+
+function save(){
+  try{localStorage.setItem(STORE_KEY,JSON.stringify({assignments,v:4,ts:Date.now()}));toast('Saved');}
+  catch(e){toast('Save failed');}
+}
+
+function restore(){
+  try{
+    const s=localStorage.getItem(STORE_KEY);if(!s)return false;
+    const d=JSON.parse(s);if(d.v!==4)return false;
+    const savedAssignments=d.assignments||{};
+    const freshIds=new Set(players.map(p=>p.id));
+    assignments={POOL:[]};
+    POS_CODES.forEach(c=>{
+      assignments[c]=(savedAssignments[c]||[]).filter(id=>freshIds.has(id));
+    });
+    const assignedIds=new Set(POS_CODES.flatMap(c=>assignments[c]));
+    players.forEach(p=>{if(!assignedIds.has(p.id)) assignments.POOL.push(p.id);});
+    render();toast('Restored saved chart');return true;
+  }catch(e){return false;}
+}
+
+function exportCsv(){
+  function cell(v){v=String(v??'');return /[",\n]/.test(v)?'"'+v.replaceAll('"','""')+'"':v;}
+  const header=['Name','Class','Jersey','Height_in','Weight_lb','JV','Varsity','Swing','Injury','D_Positions','D_Chart_Position','Depth_Order','Zone','Team_Depth'];
+  const rows=[header];
+  players.forEach(p=>{
+    const chartPos=POS_CODES.find(c=>(assignments[c]||[]).includes(p.id))||'';
+    const depthOrder=chartPos?(assignments[chartPos].indexOf(p.id)+1):'';
+
+    // Calculate zone and zone-depth
+    let zone='', zoneDepth='';
+    if(chartPos){
+      const posPlayers=(assignments[chartPos]||[]).map((id,i)=>({id,i}));
+      const vItems=posPlayers.filter(({id,i})=>{const pl=getPlayer(id);return pl&&isVarsityZone(pl,i);});
+      const jItems=posPlayers.filter(({id,i})=>{const pl=getPlayer(id);return pl&&!isVarsityZone(pl,i);});
+      const vi=vItems.findIndex(x=>x.id===p.id);
+      const ji=jItems.findIndex(x=>x.id===p.id);
+      if(vi!==-1){zone='Varsity';zoneDepth=vi+1;}
+      else if(ji!==-1){zone='JV';zoneDepth=ji+1;}
+    }
+
+    rows.push([
+      p.name, p.classBadge, p.jersey||'',
+      p.height>0?p.height:'', p.weight>0?p.weight:'',
+      p.isJV?'Y':'N', p.isVarsity?'Y':'N', p.isSwing?'Y':'N',
+      p.injury||'',
+      p.positions.join('|'),
+      chartPos, depthOrder, zone, zoneDepth
+    ]);
+  });
+  rows.sort((a,b)=>{
+    if(a===header||b===header) return 0;
+    const posA=a[10]||'ZZZ', posB=b[10]||'ZZZ';
+    if(posA!==posB) return posA.localeCompare(posB);
+    return (Number(a[11])||999)-(Number(b[11])||999);
+  });
+  const csv=[header,...rows.slice(1)].map(r=>r.map(cell).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='oc_eagles_defense_depth_chart.csv';a.click();
+  toast('CSV exported — edit and re-import to update');
+}
+
+function parseCsv(text){
+  const lines=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(l=>l.trim());
+  function parseLine(line){
+    const fields=[];let cur='';let inQ=false;
+    for(let i=0;i<line.length;i++){
+      const c=line[i];
+      if(inQ){if(c==='"'&&line[i+1]==='"'){cur+='"';i++;}else if(c==='"'){inQ=false;}else cur+=c;}
+      else if(c==='"'){inQ=true;}
+      else if(c===','){fields.push(cur.trim());cur='';}
+      else cur+=c;
+    }
+    fields.push(cur.trim());return fields;
+  }
+  const header=parseLine(lines[0]).map(h=>h.toLowerCase().replace(/[^a-z0-9_]/g,'_'));
+  return lines.slice(1).map(line=>{
+    const vals=parseLine(line);
+    const obj={};header.forEach((h,i)=>obj[h]=vals[i]??'');
+    return obj;
+  }).filter(r=>r[header[0]]); // skip blank rows
+}
+
+function makeid(name,classYr){
+  return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'-'+String(classYr).replace(/[^0-9]/g,'');
+}
+
+function importCsv(text){
+  let rows;
+  try{rows=parseCsv(text);}catch(e){toast('CSV parse error');return;}
+  if(!rows.length){toast('No data rows found');return;}
+
+  const firstRow=rows[0];
+  const keys=Object.keys(firstRow);
+
+  const hasName=keys.some(k=>k.includes('name'));
+  if(!hasName){toast('CSV must have a Name column');return;}
+
+  const nameKey=keys.find(k=>k.includes('name'))||'name';
+  const classKey=keys.find(k=>k.includes('class'))||'class';
+  const jerseyKey=keys.find(k=>k.includes('jersey'))||'jersey';
+  const htKey=keys.find(k=>k.includes('height'))||'height_in';
+  const wtKey=keys.find(k=>k.includes('weight'))||'weight_lb';
+  const jvKey=keys.find(k=>k==='jv')||'jv';
+  const varKey=keys.find(k=>k==='varsity')||'varsity';
+  const swKey=keys.find(k=>k.includes('swing'))||'swing';
+  const injKey=keys.find(k=>k.includes('injury'))||'injury';
+  const dposKey=keys.find(k=>k.includes('d_position')&&!k.includes('chart'))||'d_positions';
+  const chartPosKey=keys.find(k=>k.includes('chart_position'))||'d_chart_position';
+  const depthKey=keys.find(k=>k.includes('depth_order'))||'depth_order';
+  const zoneKey=keys.find(k=>k==='zone')||'zone';
+  const zoneDepthKey=keys.find(k=>k.includes('team_depth'))||'team_depth';
+
+  function yesNo(v){return /^(y|yes|true|1|x)$/i.test(String(v).trim());}
+  function num(v){const n=parseFloat(v);return isNaN(n)?0:n;}
+
+  const newPlayers=[];
+  const newAssignments={POOL:[]};
+  POS_CODES.forEach(c=>newAssignments[c]=[]);
+
+  const depthMap={};
+
+  rows.forEach(r=>{
+    const rawName=r[nameKey]||'';
+    if(!rawName.trim()) return;
+
+    const classBadge=(r[classKey]||'').trim();
+    const classYear=classBadge.replace(/[^0-9]/g,'').slice(-2);
+    const fullYear=classYear.length===2?'20'+classYear:classYear||'0000';
+    const normalizedBadge=classYear?`'${classYear}`:classBadge;
+
+    const id=makeid(rawName,fullYear);
+
+    const rawDPos=(r[dposKey]||'').trim().toUpperCase();
+    const dposArr=rawDPos?rawDPos.split(/[|,\s]+/).filter(x=>POS_CODES.includes(x)):[];
+
+    const p={
+      id, name:rawName.trim(), classBadge:normalizedBadge,
+      height:num(r[htKey]), weight:num(r[wtKey]),
+      jersey:(r[jerseyKey]||'').trim(),
+      primaryPosition:'',dPosRaw:rawDPos,positions:dposArr,
+      isJV:yesNo(r[jvKey]),isVarsity:yesNo(r[varKey]),isSwing:yesNo(r[swKey]),
+      injury:(r[injKey]||'').trim()
+    };
+    newPlayers.push(p);
+
+    const chartPos=(r[chartPosKey]||'').trim().toUpperCase();
+    const depthOrder=parseInt(r[depthKey])||9999;
+    const zone=(r[zoneKey]||'').trim();
+    const zoneDepth=parseInt(r[zoneDepthKey])||9999;
+
+    if(POS_CODES.includes(chartPos)){
+      // If zone info present, use it to reconstruct order: varsity first, then JV, each sorted by zone_depth
+      const sortKey=zone.toLowerCase()==='jv'?(10000+zoneDepth):(zoneDepth<9999?zoneDepth:depthOrder);
+      depthMap[id]={pos:chartPos,order:sortKey};
+    }
+  });
+
+  Object.entries(depthMap).sort((a,b)=>a[1].order-b[1].order).forEach(([id,{pos}])=>{
+    newAssignments[pos].push(id);
+  });
+  newPlayers.forEach(p=>{
+    const placed=POS_CODES.some(c=>newAssignments[c].includes(p.id));
+    if(!placed) newAssignments.POOL.push(p.id);
+  });
+
+  const added=newPlayers.filter(np=>!players.some(p=>p.id===np.id)).length;
+  const updated=newPlayers.filter(np=>players.some(p=>p.id===np.id)).length;
+  const removed=players.filter(p=>!newPlayers.some(np=>np.id===p.id)).length;
+
+  players=newPlayers;
+  assignments=newAssignments;
+  render();
+  save();
+  toast(`Imported: ${updated} updated, ${added} added, ${removed} removed`);
+}
+
+function openEditModal(id){
+  const p=getPlayer(id);if(!p)return;
+  const fields=$('editFields');
+  fields.innerHTML='';
+
+  function row(label,html){
+    const d=document.createElement('div');
+    d.className='edit-field';
+    d.innerHTML=`<span class="edit-label">${label}</span>${html}`;
+    fields.appendChild(d);
+    return d;
+  }
+
+  row('Name',`<input class="edit-input" id="eN" value="${esc(p.name)}"/>`);
+
+  const classRow=document.createElement('div');
+  classRow.style.display='grid';classRow.style.gridTemplateColumns='1fr 1fr 1fr';classRow.style.gap='8px';
+  classRow.innerHTML=`
+    <div class="edit-field"><span class="edit-label">Class</span><input class="edit-input" id="eCls" value="${esc(p.classBadge)}"/></div>
+    <div class="edit-field"><span class="edit-label">Jersey #</span><input class="edit-input" id="eJ" value="${esc(p.jersey||"")}"/></div>
+    <div class="edit-field"><span class="edit-label">Height (in)</span><input class="edit-input" id="eHt" type="number" value="${p.height>0?p.height:""}"/></div>`;
+  fields.appendChild(classRow);
+
+  const physRow=document.createElement('div');
+  physRow.style.display='grid';physRow.style.gridTemplateColumns='1fr 1fr';physRow.style.gap='8px';
+  physRow.innerHTML=`
+    <div class="edit-field"><span class="edit-label">Weight (lb)</span><input class="edit-input" id="eWt" type="number" value="${p.weight>0?p.weight:""}"/></div>
+    <div class="edit-field"><span class="edit-label">Injury / Return</span><input class="edit-input" id="eInj" value="${esc(p.injury||"")}"/></div>`;
+  fields.appendChild(physRow);
+
+  // Level toggles
+  const lvDiv=document.createElement('div');
+  lvDiv.className='edit-field';
+  lvDiv.innerHTML=`<span class="edit-label">Level</span><div class="edit-toggles">
+    <button class="etoggle${p.isJV?" on-jv":""}" id="eJV" type="button">JV</button>
+    <button class="etoggle${p.isVarsity?" on-v":""}" id="eV" type="button">Varsity</button>
+    <button class="etoggle${p.isSwing?" on-sw":""}" id="eSW" type="button">Swing</button>
+  </div>`;
+  fields.appendChild(lvDiv);
+  lvDiv.querySelector('#eJV').addEventListener('click',function(){this.classList.toggle('on-jv')});
+  lvDiv.querySelector('#eV').addEventListener('click',function(){this.classList.toggle('on-v')});
+  lvDiv.querySelector('#eSW').addEventListener('click',function(){this.classList.toggle('on-sw')});
+
+  // D-Position selector
+  const posDiv=document.createElement('div');
+  posDiv.className='edit-field';
+  posDiv.innerHTML=`<span class="edit-label">Defensive Positions</span><div class="pos-grid" id="ePosGrid"></div>`;
+  fields.appendChild(posDiv);
+  const grid=posDiv.querySelector('#ePosGrid');
+  POSITIONS.forEach(pos=>{
+    const btn=document.createElement('button');
+    const sel=p.positions.includes(pos.code);
+    btn.className=`epos${sel?" selected-"+pos.group:""}`;
+    btn.textContent=pos.code;btn.title=pos.name;btn.type='button';
+    btn.dataset.code=pos.code;btn.dataset.group=pos.group;
+    btn.addEventListener('click',function(){
+      const on=this.classList.contains('selected-'+pos.group);
+      if(on) this.className='epos';
+      else this.className=`epos selected-${pos.group}`;
+    });
+    grid.appendChild(btn);
+  });
+
+  $('editOverlay').style.display='flex';
+
+  $('editSave').onclick=()=>{
+    p.name=$('eN').value.trim()||p.name;
+    const rawClass=$('eCls').value.trim();
+    const digits=rawClass.replace(/[^0-9]/g,'').slice(-2);
+    p.classBadge=digits?`'${digits}`:rawClass;
+    p.jersey=$('eJ').value.trim();
+    p.height=parseFloat($('eHt').value)||0;
+    p.weight=parseFloat($('eWt').value)||0;
+    p.injury=$('eInj').value.trim();
+    p.isJV=lvDiv.querySelector('#eJV').classList.contains('on-jv');
+    p.isVarsity=lvDiv.querySelector('#eV').classList.contains('on-v');
+    p.isSwing=lvDiv.querySelector('#eSW').classList.contains('on-sw');
+    p.positions=[...grid.querySelectorAll('.epos[class*="selected"]')].map(b=>b.dataset.code);
+    p.dPosRaw=p.positions.join('|');
+    $('editOverlay').style.display='none';
+    render();toast(`${p.name} updated`);
+  };
+}
+
+$('editClose').addEventListener('click',()=>$('editOverlay').style.display='none');
+$('editCancel').addEventListener('click',()=>$('editOverlay').style.display='none');
+$('editOverlay').addEventListener('click',e=>{if(e.target===$('editOverlay'))$('editOverlay').style.display='none';});
+
+function doPrint(mode){
+  // mode: 'jv' | 'varsity' | 'all'
+  const titles={jv:'JV Depth Chart',varsity:'Varsity Depth Chart',all:'Full Program Depth Chart'};
+  $('printTitle').textContent=`OC Eagles Defense — ${titles[mode]}`;
+  $('printDate').textContent=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+
+  // Save current level and set print level
+  const prev=levelView;
+  if(mode==='jv') setLevel('jvsw');        // JV + swing = JV game eligible
+  else if(mode==='varsity') setLevel('v'); // Varsity + swing
+  else setLevel('all');
+
+  // In print mode dimmed cards are hidden, so just print
+  setTimeout(()=>{
+    window.print();
+    // Restore after print dialog closes
+    setTimeout(()=>setLevel(prev),500);
+  },120);
+}
+
+$('btnLoad').addEventListener('click',()=>{if(confirm('Reload full roster and reset chart?')){initPlayers();render();toast('Roster loaded');}});
+$('btnAutoFill').addEventListener('click',autoFill);
+$('btnSave').addEventListener('click',save);
+$('btnCsv').addEventListener('click',exportCsv);
+$('btnImport').addEventListener('change',function(){
+  const file=this.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>importCsv(e.target.result);
+  reader.readAsText(file);
+  this.value='';
+});
+$('btnPrintJV').addEventListener('click',()=>doPrint('jv'));
+$('btnPrintV').addEventListener('click',()=>doPrint('varsity'));
+$('btnPrintAll').addEventListener('click',()=>doPrint('all'));
+$('btnClear').addEventListener('click',()=>{if(confirm('Clear all depth chart assignments?')){POS_CODES.forEach(c=>assignments[c]=[]);assignments.POOL=players.map(p=>p.id);render();toast('Cleared');}});
+$('search').addEventListener('input',renderPool);
+$('rosterFilter').addEventListener('change',renderPool);
+document.querySelectorAll('#poolPosFilter .pos-pill').forEach(b=>b.addEventListener('click',()=>{
+  poolPosFilter=b.dataset.pos;
+  document.querySelectorAll('#poolPosFilter .pos-pill').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  renderPool();
+}));
+document.querySelectorAll('.lpill[data-lv]').forEach(b=>b.addEventListener('click',()=>setLevel(b.dataset.lv)));
+document.querySelectorAll('.lpill[data-layout]').forEach(b=>b.addEventListener('click',()=>{
+  layoutView=b.dataset.layout;
+  document.querySelectorAll('.lpill[data-layout]').forEach(x=>x.classList.remove('active-layout'));
+  b.classList.add('active-layout');
+  renderAlignment();
+}));
+document.querySelectorAll('[data-cv]').forEach(b=>b.addEventListener('click',()=>{
+  cardView=b.dataset.cv;
+  document.querySelectorAll('[data-cv]').forEach(x=>x.classList.remove('active-layout'));
+  b.classList.add('active-layout');
+  renderAlignment();
+}));
+document.querySelectorAll('[data-tr]').forEach(b=>b.addEventListener('click',()=>{
+  transferView=b.dataset.tr;
+  document.querySelectorAll('[data-tr]').forEach(x=>x.classList.remove('active-layout'));
+  b.classList.add('active-layout');
+  renderAlignment();
+}));
+
+initPlayers();
+if(!restore()){
+  const COACHED={
+    FCB:['jackson-brewer-2029','hayden-rodgers-2028','damarkus-allen-2027','gideon-penzkover-2028'],
+    SS:['ryelan-barzee-2029','taye-shoesmith-2028','ryder-nettles-2028'],
+    B:['greyson-sarres-2029','gabriel-miller-2029','roque-mendiola-2028','parker-williams-2028'],
+    M:['clayton-joralmon-2029','jacob-heaton-2028','matteo-duran-2028','max-ricart-2028'],
+    W:['dawson-wiggins-2028','karson-gaines-2029','cameron-geoco-2029','nicholas-peifer-2029','montrell-woodard-2029'],
+    E:['carter-ryan-2029','tye-hernandez-2029'],
+    N:['kweli-davis-2028','hayden-walker-2029','eknoor-singh-2029','tredell-mcintyre-2029','micah-trevino-2029'],
+    T:['jon-venero-2029','joshua-nixon-2029','noah-smith-2029'],
+    J:['joel-hernandez-2028','daniel-carbajal-2028','jayden-wingler-2029'],
+    FS:['derek-hale-2029','rylan-milks-2029','joseph-gardner-2028','zaza-cruse-2028','aiden-hurley-2028'],
+    BCB:['jacob-chapin-2028','hayden-lawler-2028','nolan-johnson-2029','jayden-davis-2028','cameron-zuhlke-2029','dashyl-bizardi-2028','braylon-lopez-2028'],
+  };
+  const assignedSet=new Set(Object.values(COACHED).flat());
+  POS_CODES.forEach(c=>assignments[c]=COACHED[c]||[]);
+  assignments.POOL=players.map(p=>p.id).filter(id=>!assignedSet.has(id));
+  render();
+}
+</script>
+</body>
+</html>
